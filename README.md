@@ -4,3 +4,8 @@
 ```
 npm install
 ```
+
+## Run locally
+```
+npm run electron:serve
+```
