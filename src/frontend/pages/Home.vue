@@ -1,3 +1,37 @@
+<script>
+import { ipcRenderer } from 'electron';
+
+export default {
+  data() {
+    return {
+      url: 'https://dataverse.harvard.edu',
+      apiKey: 'ed1a27d8-9362-4579-8d10-3355fb7823b6',
+      datasetId: 'doi:10.7910/DVN/JCCOAT',
+      dataverseAlias: 'lab-sist-info-grupo-7',
+    };
+  },
+  mounted() {},
+  methods: {
+    loadDataVerseClient() {
+      ipcRenderer
+        .invoke('load-dataverse-client', this.url, this.apiKey)
+        .then((result) => {
+          console.log('ok');
+        })
+        .catch((err) => console.log(err));
+    },
+    loadDataVerseDataInfo() {
+      ipcRenderer
+        .invoke('load-dataverse-data-info', this.dataverseAlias)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+};
+</script>
+
 <template>
   <div class="p-3" style="max-width: 30rem">
     <h1 class="text-xl">Anonimizador</h1>
@@ -47,37 +81,3 @@
     </button>
   </div>
 </template>
-
-<script>
-import { ipcRenderer } from 'electron'
-
-export default {
-  data() {
-    return {
-      url: 'https://dataverse.harvard.edu',
-      apiKey: 'ed1a27d8-9362-4579-8d10-3355fb7823b6',
-      datasetId: 'doi:10.7910/DVN/JCCOAT',
-      dataverseAlias: 'lab-sist-info-grupo-7',
-    }
-  },
-  mounted() {},
-  methods: {
-    loadDataVerseClient() {
-      ipcRenderer
-        .invoke('load-dataverse-client', this.url, this.apiKey)
-        .then((result) => {
-          console.log('ok')
-        })
-        .catch((err) => console.log(err))
-    },
-    loadDataVerseDataInfo() {
-      ipcRenderer
-        .invoke('load-dataverse-data-info', this.dataverseAlias)
-        .then((result) => {
-          console.log(result)
-        })
-        .catch((err) => console.log(err))
-    },
-  },
-}
-</script>
