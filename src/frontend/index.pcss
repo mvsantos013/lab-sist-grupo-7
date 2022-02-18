@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: #f9f9f9;
+}
+
+.app-btn {
+  &.primary{
+    @apply bg-primary-500 hover:bg-primary-700;
+
+    &.disabled {
+      @apply bg-primary-300 hover:bg-primary-300 cursor-not-allowed;
+    }
+  }
+
+  &.secondary{
+    @apply bg-secondary-500 hover:bg-secondary-700;
+
+    &.disabled {
+      @apply bg-secondary-300 hover:bg-secondary-300 cursor-not-allowed;
+    }
+  }
+}

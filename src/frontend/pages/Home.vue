@@ -1,37 +1,3 @@
-<script>
-import { ipcRenderer } from 'electron';
-
-export default {
-  data() {
-    return {
-      url: 'https://dataverse.harvard.edu',
-      apiKey: 'ed1a27d8-9362-4579-8d10-3355fb7823b6',
-      datasetId: 'doi:10.7910/DVN/JCCOAT',
-      dataverseAlias: 'lab-sist-info-grupo-7',
-    };
-  },
-  mounted() {},
-  methods: {
-    loadDataVerseClient() {
-      ipcRenderer
-        .invoke('load-dataverse-client', this.url, this.apiKey)
-        .then((result) => {
-          console.log('ok');
-        })
-        .catch((err) => console.log(err));
-    },
-    loadDataVerseDataInfo() {
-      ipcRenderer
-        .invoke('load-dataverse-data-info', this.dataverseAlias)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((err) => console.log(err));
-    },
-  },
-};
-</script>
-
 <template>
   <div class="p-3" style="max-width: 30rem">
     <h1 class="text-xl">Anonimizador</h1>
@@ -51,33 +17,81 @@ export default {
     />
 
     <h3 class="mt-5">Dataverse Alias</h3>
-    <input
-      v-model="dataverseAlias"
-      type="text"
-      class="border border-primary-500 rounded-sm px-1 w-full"
-    />
+    <div class="flex flex-nowrap items-center">
+      <input
+        v-model="dataverseAlias"
+        type="text"
+        class="border border-primary-500 rounded-sm px-1 flex-grow"
+      />
 
-    <button
-      class="m-1 bg-primary-500 hover:bg-primary-700 text-sm text-white font-bold py-1 px-2 rounded ml-3"
-      @click="loadDataVerseClient"
-    >
-      Carregar client
-    </button>
+      <button
+        class="m-1 app-btn primary text-sm text-white font-bold py-1 px-2 rounded ml-3 w-40"
+        @click="loadDataVerse"
+      >
+        Carregar Dataverse
+      </button>
+    </div>
 
-    <h3>Dataverse Dataset Persistent ID</h3>
+    <h3 class="mt-5">Dataverse Dataset Persistent ID</h3>
 
-    <input
-      v-model="datasetId"
-      autofocus
-      type="text"
-      class="border border-primary-500 rounded-sm px-1 flex-grow"
-    />
+    <div class="flex items-center">
+      <input
+        v-model="datasetId"
+        autofocus
+        type="text"
+        class="border border-primary-500 rounded-sm px-1 flex-grow"
+      />
 
-    <button
-      class="m-1 bg-secondary-500 hover:bg-secondary-700 text-sm text-white font-bold py-1 px-2 rounded ml-3"
-      @click="loadDataVerseDataInfo"
-    >
-      Carregar informação
-    </button>
+      <button
+        class="m-1 app-btn secondary text-sm text-white font-bold py-1 px-2 rounded ml-3 w-40"
+        :class="{
+          disabled: !clientLoaded,
+        }"
+        :disabled="clientLoaded"
+        @click="loadDataset"
+      >
+        Carregar Dataset
+      </button>
+    </div>
   </div>
 </template>
+
+<script>
+import { ipcRenderer } from 'electron';
+export default {
+  data() {
+    return {
+      url: 'https://dataverse.harvard.edu',
+      apiKey: 'ed1a27d8-9362-4579-8d10-3355fb7823b6',
+      datasetId: 'doi:10.7910/DVN/JCCOAT',
+      dataverseAlias: 'lab-sist-info-grupo-7',
+      clientLoaded: false,
+    };
+  },
+  mounted() {},
+  methods: {
+    async loadDataVerse() {
+      try {
+        const loadClientResponse = await ipcRenderer.invoke(
+          'load-dataverse-client',
+          this.url,
+          this.apiKey,
+        );
+        this.clientLoaded = true;
+        console.log(loadClientResponse);
+        const loadDataverseResponse = await ipcRenderer.invoke(
+          'load-dataverse-data-info',
+          this.dataverseAlias,
+        );
+        console.log(loadDataverseResponse);
+      } catch (e) {
+        console.log(e);
+        this.clientLoaded = false;
+      }
+    },
+    async loadDataset() {
+      console.log(1);
+    },
+  },
+};
+</script>
