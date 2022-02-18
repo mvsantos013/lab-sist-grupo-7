@@ -68,7 +68,10 @@ export default {
       clientLoaded: false,
     };
   },
-  mounted() {},
+  async mounted() {
+    const test = await ipcRenderer.invoke('db-get-config-values');
+    console.log(test);
+  },
   methods: {
     async loadDataVerse() {
       try {
