@@ -1,24 +1,44 @@
-import * as fs from 'fs/promises';
+import * as fsPromises from 'fs/promises';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as dataverseClient from '@/backend/singletons/dataverseClient';
 
-const dataverseClientInfoPath = 'src/data/dataVerseClientInfo.json';
+const dataverseClientInfoDir = 'src/data/';
+const dataverseClientInfoFile = 'dataVerseClientInfo.json';
 
-const loadDataVerseClient = async (event, host = null, apiKey = null) => {
-  let data;
-  if (host && apiKey) {
-    data = { host, apiKey };
-    await fs.writeFile(
-      path.resolve(dataverseClientInfoPath),
-      JSON.stringify(data),
-    );
-  } else {
-    data = JSON.parse(
-      String(await fs.open(path.resolve(dataverseClientInfoPath), 'r')),
-    );
+export const saveDataverseClientConfig = async (
+  event,
+  host = null,
+  apiKey = null,
+) => {
+  const filePath = path.resolve(
+    dataverseClientInfoDir + dataverseClientInfoFile,
+  );
+  const dirPath = path.resolve(dataverseClientInfoDir);
+  if (!host || !apiKey) {
+    throw new Error('Host and key must be present');
   }
-  console.log('dataverseclient info:', data);
-  dataverseClient.load(data.host, data.apiKey);
+
+  if (fs.existsSync(filePath)) {
+    await fsPromises.unlink(filePath);
+  }
+  if (!fs.existsSync(dirPath)) {
+    await fsPromises.mkdir(dirPath);
+  }
+
+  const data = { host, apiKey };
+  await fsPromises.writeFile(filePath, JSON.stringify(data));
 };
 
-export default loadDataVerseClient;
+export const loadDataverseClientFromSavedConfig = async () => {
+  const pathString = dataverseClientInfoDir + dataverseClientInfoFile;
+  const filePath = path.resolve(pathString);
+  if (!fs.existsSync(filePath)) {
+    return false;
+  }
+
+  const contentString = String(await fsPromises.readFile(filePath));
+  const data = JSON.parse(contentString);
+  dataverseClient.load(data.host, data.apiKey);
+  return true;
+};

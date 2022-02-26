@@ -1,6 +1,19 @@
 import { ipcMain } from 'electron';
-import loadDataVerseClient from './controllers/loadDataVerseClient';
+import {
+  loadDataverseClientFromSavedConfig,
+  saveDataverseClientConfig,
+} from './controllers/loadDataVerseClient';
 import { loadDataVerseDataInfo } from './controllers/loadDataVerseData';
+import handle from '@/backend/handler';
 
-ipcMain.handle('load-dataverse-client', loadDataVerseClient);
-ipcMain.handle('load-dataverse-data-info', loadDataVerseDataInfo);
+ipcMain.handle(
+  'save-dataverse-client-config',
+  handle.bind(saveDataverseClientConfig),
+);
+
+ipcMain.handle(
+  'load-dataverse-client',
+  handle.bind(loadDataverseClientFromSavedConfig),
+);
+
+ipcMain.handle('load-dataverse-data-info', handle.bind(loadDataVerseDataInfo));

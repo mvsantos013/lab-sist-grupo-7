@@ -1,0 +1,30 @@
+
+.btn {
+
+    border-radius: 100px;
+
+    transition: background-color 300ms linear;
+    font-size: 14pt;
+    padding: 10px 25px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+
+    &.primary{
+        @apply text-white bg-primary-500 hover:bg-primary-600;
+        &.disabled {
+            border: 1px dashed theme('colors.primary.600');
+            @apply bg-primary-200 hover:bg-primary-200 cursor-not-allowed;
+        }
+    }
+
+    &.secondary{
+        @apply text-white bg-secondary-600 hover:bg-secondary-500;
+        &.disabled {
+            border: 1px dashed theme('colors.secondary.600');
+            @apply bg-secondary-200 hover:bg-secondary-200 cursor-not-allowed;
+        }
+    }
+}
