@@ -20,7 +20,8 @@
     "js-dataverse": "^1.0.49",
     "postcss-nested": "^4.2.1",
     "sqlite3": "^5.0.2",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.17",

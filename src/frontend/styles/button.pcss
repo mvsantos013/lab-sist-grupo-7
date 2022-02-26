@@ -2,15 +2,16 @@
 .btn {
 
     border-radius: 100px;
-
     transition: background-color 300ms linear;
     font-size: 14pt;
     padding: 10px 25px;
     height: 50px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
+    width: 100%;
+    max-width: 200px;
 
     &.primary{
         @apply text-white bg-primary-500 hover:bg-primary-600;

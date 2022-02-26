@@ -5,6 +5,7 @@
 @import "input-text.pcss";
 @import "containers.pcss";
 @import "loading.pcss";
+@import "upload-card.pcss";
 
 *:focus {
   outline: none;
@@ -24,4 +25,29 @@ body{
   font-size: 12pt;
   font-weight: 500;
   background-color: #fefefe;
+}
+
+.header {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  min-width: 400px;
+}
+
+.app-body {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

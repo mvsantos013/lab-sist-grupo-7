@@ -2,7 +2,7 @@ import { ipcMain } from 'electron';
 import {
   loadDataverseClientFromSavedConfig,
   saveDataverseClientConfig,
-} from './controllers/loadDataVerseClient';
+} from './controllers/DataVerseClient';
 import { loadDataVerseDataInfo } from './controllers/loadDataVerseData';
 import handle from '@/backend/handler';
 
