@@ -1,14 +1,21 @@
 import { DataverseClient } from 'js-dataverse';
 import SingletonLoadError from '@/backend/errors/singletonLoadError';
 
-let client = null;
+let _client = null;
+let _host = null;
+let _apitoken = null;
 
 const load = (host, apiToken) => {
-  client = new DataverseClient(host, apiToken);
+  if (_client && host === _host && apiToken === _apitoken) {
+    return _client;
+  }
+  _host = host;
+  _apitoken = apiToken;
+  _client = new DataverseClient(host, apiToken);
 };
 const get = () => {
-  if (client) {
-    return client;
+  if (_client) {
+    return _client;
   } else {
     throw new SingletonLoadError('Client not instantiated');
   }

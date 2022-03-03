@@ -1,8 +1,8 @@
-<template></template>
+<template>Not Implemented</template>
 
 <script>
 export default {
-  name: 'ClientLoader',
+  name: 'Upload',
 };
 </script>
 
