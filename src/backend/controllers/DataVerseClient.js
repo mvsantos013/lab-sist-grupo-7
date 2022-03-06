@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as dataverseClient from '@/backend/singletons/dataverseClient';
 
 const dataverseClientInfoDir = 'src/data/';
-const dataverseClientInfoFile = 'dataVerseClientInfo.json';
+const ConfigModel = require('../sequelize/models/config');
 
 export const saveDataverseClientConfig = async (
   event,

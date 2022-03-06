@@ -10,7 +10,8 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "start": "npm run electron:serve",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "sequelize-cli": "sequelize-cli"
   },
   "main": "background.js",
   "dependencies": {
@@ -39,6 +40,7 @@
     "eslint-plugin-vue": "^7.0.0",
     "postcss": "^7.0.39",
     "prettier": "^2.2.1",
+    "sequelize-cli": "^6.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "vue-cli-plugin-electron-builder": "~2.1.1"
   }
