@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   config.init(
     {
+      id: {
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       host: DataTypes.STRING,
       apikey: DataTypes.STRING,
     },

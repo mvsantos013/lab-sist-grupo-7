@@ -6,7 +6,7 @@
     <input v-model="url" type="text" class="input-text" />
 
     <h3 class="mt-5">API Key</h3>
-    <input v-model="apiKey" type="text" class="input-text" />
+    <input v-model="apikey" type="text" class="input-text" />
   </div>
   <div class="input-container mt-4">
     <button class="btn secondary m-1" @click="cancel">Cancelar</button>
@@ -22,11 +22,13 @@ export default {
   name: 'ConfigDataverseClient',
   data: () => ({
     url: '',
-    apiKey: '',
+    apikey: '',
   }),
   inject: ['AppContext'],
   mounted() {
     this.AppContext.showLoader = false;
+    this.url = this.AppContext.dataverseClientConfig.host;
+    this.apikey = this.AppContext.dataverseClientConfig.apikey;
   },
   methods: {
     async cancel() {
@@ -38,9 +40,10 @@ export default {
           ipcRenderer.invoke(
             'save-dataverse-client-config',
             this.url,
-            this.apiKey,
+            this.apikey,
           ),
         );
+        this.AppContext.dataverseClientConfig = null;
         await this.$router.push('/');
       } catch (e) {
         await this.$router.push({

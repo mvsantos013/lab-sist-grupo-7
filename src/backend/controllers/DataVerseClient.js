@@ -1,44 +1,38 @@
-import * as fsPromises from 'fs/promises';
-import * as fs from 'fs';
-import * as path from 'path';
 import * as dataverseClient from '@/backend/singletons/dataverseClient';
-
-const dataverseClientInfoDir = 'src/data/';
-const ConfigModel = require('../sequelize/models/config');
+const { ConfigModel } = require('/data');
 
 export const saveDataverseClientConfig = async (
   event,
   host = null,
-  apiKey = null,
+  apikey = null,
 ) => {
-  const filePath = path.resolve(
-    dataverseClientInfoDir + dataverseClientInfoFile,
-  );
-  const dirPath = path.resolve(dataverseClientInfoDir);
-  if (!host || !apiKey) {
+  if (!host || !apikey) {
     throw new Error('Host and key must be present');
   }
 
-  if (fs.existsSync(filePath)) {
-    await fsPromises.unlink(filePath);
-  }
-  if (!fs.existsSync(dirPath)) {
-    await fsPromises.mkdir(dirPath);
-  }
+  let config = await ConfigModel.findByPk(1);
 
-  const data = { host, apiKey };
-  await fsPromises.writeFile(filePath, JSON.stringify(data));
+  if (!config) {
+    await ConfigModel.create({
+      values: {
+        host,
+        apikey,
+      },
+    });
+  } else {
+    config.host = host;
+    config.apikey = apikey;
+    await config.save();
+  }
 };
 
 export const loadDataverseClientFromSavedConfig = async () => {
-  const pathString = dataverseClientInfoDir + dataverseClientInfoFile;
-  const filePath = path.resolve(pathString);
-  if (!fs.existsSync(filePath)) {
-    return false;
+  let config = await ConfigModel.findByPk(1);
+  if (!config) {
+    return null;
+  } else {
+    const { host, apikey } = config;
+    dataverseClient.load(host, apikey);
+    return { host, apikey };
   }
-
-  const contentString = String(await fsPromises.readFile(filePath));
-  const data = JSON.parse(contentString);
-  dataverseClient.load(data.host, data.apiKey);
-  return true;
 };

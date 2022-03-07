@@ -8,17 +8,26 @@ import { ipcRenderer } from 'electron';
 
 const AppContext = reactive({
   showLoader: true,
+  dataverseClientConfig: null,
 });
 
 const loadDataVerse = async () => {
   try {
-    const loadClientResponse = await handleResponse(
-      ipcRenderer.invoke('load-dataverse-client'),
-    );
-    if (loadClientResponse) {
-      return true;
+    if (!AppContext.dataverseClientConfig) {
+      const loadClientResponse = await handleResponse(
+        ipcRenderer.invoke('load-dataverse-client'),
+      );
+      if (loadClientResponse) {
+        AppContext.dataverseClientConfig = {
+          host: loadClientResponse.host,
+          apikey: loadClientResponse.apikey,
+        };
+        return true;
+      } else {
+        return '/config';
+      }
     } else {
-      return '/config';
+      return true;
     }
   } catch (e) {
     return `/error/${e.message.toString()}/${e.stack.toString()}`;
