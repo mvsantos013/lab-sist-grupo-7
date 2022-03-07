@@ -21,6 +21,7 @@ const loadDataVerse = async () => {
         AppContext.dataverseClientConfig = {
           host: loadClientResponse.host,
           apikey: loadClientResponse.apikey,
+          dataverse: loadClientResponse.dataverse,
         };
         return true;
       } else {

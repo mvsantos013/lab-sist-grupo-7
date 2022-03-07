@@ -5,9 +5,10 @@ export const saveDataverseClientConfig = async (
   event,
   host = null,
   apikey = null,
+  dataverse = null,
 ) => {
-  if (!host || !apikey) {
-    throw new Error('Host and key must be present');
+  if (!host || !apikey || !dataverse) {
+    throw new Error('Host, key and dataverse alias must be present');
   }
 
   let config = await ConfigModel.findByPk(1);
@@ -17,11 +18,13 @@ export const saveDataverseClientConfig = async (
       values: {
         host,
         apikey,
+        dataverse,
       },
     });
   } else {
     config.host = host;
     config.apikey = apikey;
+    config.dataverse = dataverse;
     await config.save();
   }
 };
@@ -31,8 +34,8 @@ export const loadDataverseClientFromSavedConfig = async () => {
   if (!config) {
     return null;
   } else {
-    const { host, apikey } = config;
-    dataverseClient.load(host, apikey);
-    return { host, apikey };
+    const { host, apikey, dataverse } = config;
+    dataverseClient.load(host, apikey, dataverse);
+    return { host, apikey, dataverse };
   }
 };

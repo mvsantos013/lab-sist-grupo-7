@@ -16,6 +16,9 @@ module.exports = {
         apikey: {
           type: Sequelize.STRING,
         },
+        dataverse: {
+          type: Sequelize.STRING,
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,

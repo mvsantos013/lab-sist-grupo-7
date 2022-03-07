@@ -7,6 +7,9 @@
 
     <h3 class="mt-5">API Key</h3>
     <input v-model="apikey" type="text" class="input-text" />
+
+    <h3 class="mt-5">Dataverse Alias</h3>
+    <input v-model="dataverse" type="text" class="input-text" />
   </div>
   <div class="input-container mt-4">
     <button class="btn secondary m-1" @click="cancel">Cancelar</button>
@@ -23,12 +26,14 @@ export default {
   data: () => ({
     url: '',
     apikey: '',
+    dataverse: '',
   }),
   inject: ['AppContext'],
   mounted() {
     this.AppContext.showLoader = false;
-    this.url = this.AppContext.dataverseClientConfig.host;
-    this.apikey = this.AppContext.dataverseClientConfig.apikey;
+    this.url = this.AppContext.dataverseClientConfig?.host;
+    this.apikey = this.AppContext.dataverseClientConfig?.apikey;
+    this.dataverse = this.AppContext.dataverseClientConfig?.dataverse;
   },
   methods: {
     async cancel() {
@@ -41,6 +46,7 @@ export default {
             'save-dataverse-client-config',
             this.url,
             this.apikey,
+            this.dataverse,
           ),
         );
         this.AppContext.dataverseClientConfig = null;

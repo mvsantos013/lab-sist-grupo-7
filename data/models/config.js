@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       host: DataTypes.STRING,
       apikey: DataTypes.STRING,
+      dataverse: DataTypes.STRING,
     },
     {
       sequelize,

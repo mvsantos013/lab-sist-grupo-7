@@ -6,7 +6,7 @@ import {
   loadDataverseClientFromSavedConfig,
   saveDataverseClientConfig,
 } from './controllers/DataVerseClient';
-import { loadDataVerseDataInfo } from './controllers/loadDataVerseData';
+import { loadDataVerseDataInfo, listDatasets } from './controllers/loadDataVerseData';
 import handle from '@/backend/handler';
 
 ipcMain.handle(
@@ -20,3 +20,5 @@ ipcMain.handle(
 );
 
 ipcMain.handle('load-dataverse-data-info', handle.bind(loadDataVerseDataInfo));
+
+ipcMain.handle('list-datasets', handle.bind(listDatasets));
