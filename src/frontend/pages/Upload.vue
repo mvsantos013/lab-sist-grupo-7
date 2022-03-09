@@ -63,6 +63,22 @@
         </div>
       </div>
     </div>
+
+    <div class="mt-4">
+      <div class="line-card p-5 border-primary-500 border-2 rounded-xl">
+        <h3 class="text-2xl">Carregar do computador:</h3>
+        <div class="mt-2">
+          <input
+            ref="file"
+            class="input-file"
+            type="file"
+            @click="resetFile"
+            @change="fileSelectedFromComputer"
+          />
+          <span class="ml-5">{{ selectedFile.name }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -91,6 +107,7 @@ export default {
     return {
       datasetList: [],
       newname: '',
+      selectedFile: {},
     };
   },
   inject: ['AppContext'],
@@ -109,6 +126,15 @@ export default {
         params: { title: e.message.toString(), text: e.stack.toString() },
       });
     }
+  },
+  methods: {
+    resetFile() {
+      this.$refs.file.value = '';
+      this.selectedFile = {};
+    },
+    fileSelectedFromComputer() {
+      this.selectedFile = this.$refs.file.files[0];
+    },
   },
 };
 </script>
