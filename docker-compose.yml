@@ -1,0 +1,8 @@
+services:
+  amnesia:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: 'amnesia:latest'
+    ports:
+      - 8080:8080
