@@ -6,7 +6,10 @@ import {
   loadDataverseClientFromSavedConfig,
   saveDataverseClientConfig,
 } from './controllers/DataVerseClient';
-import { loadDataVerseDataInfo, listDatasets } from './controllers/loadDataVerseData';
+import {
+  loadDataVerseDataInfo,
+  listDatasets,
+} from './controllers/loadDataVerseData';
 import handle from '@/backend/handler';
 
 ipcMain.handle(
