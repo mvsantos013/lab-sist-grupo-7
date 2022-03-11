@@ -23,7 +23,16 @@
               Arquivos:
               <ul>
                 <li class="m-2" v-for="file in dataset.files" :key="file.id">
-                  <button class="btn small primary mr-4">Escolher</button>
+                  <button
+                    class="btn small primary mr-4"
+                    @click="
+                      () => {
+                        uploadFile(file.dataFile.originalFileName);
+                      }
+                    "
+                  >
+                    Escolher
+                  </button>
                   <span class="font-bold">{{
                     file.dataFile.originalFileName
                   }}</span>
@@ -132,8 +141,12 @@ export default {
       this.$refs.file.value = '';
       this.selectedFile = {};
     },
-    fileSelectedFromComputer() {
+    async fileSelectedFromComputer() {
       this.selectedFile = this.$refs.file.files[0];
+      this.uploadFile(this.selectedFile.name);
+    },
+    async uploadFile(f) {
+      await ipcRenderer.invoke('upload-file', f);
     },
   },
 };
