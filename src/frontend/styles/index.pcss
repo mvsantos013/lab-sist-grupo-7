@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "button.pcss";
+@import "input-text.pcss";
+@import "input-file.pcss";
+@import "containers.pcss";
+@import "loading.pcss";
+@import "upload-card.pcss";
+
+*:focus {
+  outline: none;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf');
+  font-weight: 100 1000;
+  font-stretch: 25% 151%;
+}
+
+body{
+  height: 100%;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 12pt;
+  font-weight: 500;
+  background-color: #fefefe;
+}
+
+.header {
+  left: 0;
+  top: 0;
+  padding: 20px;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  min-width: 100vw;
+}
+
+.sub-header {
+  left: 0;
+  top: 70px;
+  padding: 20px;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  min-width: 400px;
+}
+
+
+.app-body {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
